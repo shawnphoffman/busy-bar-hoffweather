@@ -1,0 +1,10 @@
+{
+  "format_version": 1,
+  "id": "app.shawnhoffman.hoffweather",
+  "name": "HoffWeather",
+  "version": "0.1.0",
+  "api_version": "27.14.0",
+  "description": "Weather station and PurpleAir readings from Home Assistant",
+  "author": "Shawn Hoffman",
+  "heap_size_kib": 256
+}

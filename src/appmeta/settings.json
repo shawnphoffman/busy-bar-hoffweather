@@ -1,0 +1,107 @@
+{
+  "format_version": 1,
+  "version": 1,
+  "fields": {
+    "wf_token": {
+      "type": "string",
+      "label": "WeatherFlow token",
+      "description": "Personal access token from tempestwx.com, Settings, Data Authorizations.",
+      "default": "",
+      "max_length": 80,
+      "sensitive": true
+    },
+    "wf_station_id": {
+      "type": "string",
+      "label": "WeatherFlow station ID",
+      "description": "The number in your tempestwx.com station URL.",
+      "default": "",
+      "max_length": 16
+    },
+    "aqi_url": {
+      "type": "string",
+      "label": "AQI JSON URL",
+      "description": "A URL returning JSON with an \"aqi\" number, like the tahome proxy at api.shawn.party. Used first when set; it already smooths and EPA-corrects the sensor.",
+      "default": "https://api.shawn.party/api/tahome/purple",
+      "max_length": 160
+    },
+    "purpleair_api_key": {
+      "type": "string",
+      "label": "PurpleAir API read key",
+      "description": "Used only when the AQI JSON URL is empty. A READ key from the API Keys tab at develop.purpleair.com (a long UUID), not the 16-character sensor read key.",
+      "default": "",
+      "max_length": 64,
+      "sensitive": true
+    },
+    "purpleair_sensor_index": {
+      "type": "string",
+      "label": "PurpleAir sensor index",
+      "description": "The number in the map URL (select=...).",
+      "default": "151596",
+      "max_length": 16
+    },
+    "purpleair_host": {
+      "type": "string",
+      "label": "PurpleAir local address",
+      "description": "LAN IP of the sensor, used only when no API key is set. Needs the bar to reach the sensor's network.",
+      "default": "",
+      "max_length": 80
+    },
+    "epa_correction": {
+      "type": "boolean",
+      "label": "US EPA correction",
+      "description": "Apply the EPA PurpleAir correction to PM2.5 before computing AQI, as the PurpleAir map does.",
+      "default": true
+    },
+    "show_wind": {
+      "type": "boolean",
+      "label": "Wind page",
+      "description": "Arrow, speed, gust and direction.",
+      "default": true
+    },
+    "show_details": {
+      "type": "boolean",
+      "label": "Details page",
+      "description": "Feels-like, humidity, rain today and UV.",
+      "default": false
+    },
+    "units": {
+      "type": "enum",
+      "label": "Units",
+      "default": "imperial",
+      "options": [
+        {
+          "value": "imperial",
+          "label": "F, mph, inHg, inches"
+        },
+        {
+          "value": "metric",
+          "label": "C, km/h, hPa, mm"
+        }
+      ]
+    },
+    "poll_minutes": {
+      "type": "integer",
+      "label": "Refresh every (minutes)",
+      "default": 2,
+      "min": 1,
+      "max": 30,
+      "step": 1
+    },
+    "page_seconds": {
+      "type": "integer",
+      "label": "Seconds per page",
+      "description": "0 keeps the page you picked with the wheel.",
+      "default": 8,
+      "min": 0,
+      "max": 120,
+      "step": 1
+    },
+    "wf_base_url": {
+      "type": "string",
+      "label": "WeatherFlow API base",
+      "description": "Leave as is unless you proxy the API. The app appends /rest/observations/station/<id>.",
+      "default": "https://swd.weatherflow.com/swd",
+      "max_length": 120
+    }
+  }
+}
