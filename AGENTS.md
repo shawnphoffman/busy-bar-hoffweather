@@ -84,6 +84,7 @@ When in doubt, choose the cheaper option: a slower refresh, fewer requests, less
 - The screen is 72×16 pixels. Build a tree with `row`, `column` and `stack` from `@busy-app/busy-lib`, render it with `render()`, and send the elements with `device.DisplayDraw({ application_name: APP, priority: 50, elements })`. Use `manifest.id` as `APP`.
 - Give every element a stable `id`. The device replaces elements with the same id, so only changed elements need to be sent.
 - Remove elements that disappear with `device.DisplayClear({ application_name: APP, element_ids: [...] })`.
+- Never leave the screen empty, even between two draws: the firmware shows its "Loading..." screen whenever the app has no elements up. To swap one layout for another, send the new elements and the old ones re-sent with `display_until: "1"` (a string; a past time) in a single `DisplayDraw`, and the firmware removes the old ones in that same update. Re-send them with their original type: an update that changes an existing element's type is rejected with HTTP 400.
 - `priority` is 1–100. Keep it at 50 unless the app deliberately needs to take the screen from another one.
 - Colors are `#RRGGBBAA`.
 - `listen("input", handler)` delivers `ok`, `start` and `back` with a `press`, `release`, `short`, `long` or `repeat` action, and `encoder` with a direction and a `delta` of `1` or `-1`. It returns an unbind function.

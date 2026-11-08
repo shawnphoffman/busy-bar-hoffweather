@@ -96,6 +96,44 @@
       "max": 120,
       "step": 1
     },
+    "alerts": {
+      "type": "boolean",
+      "label": "Alert sounds",
+      "description": "While HoffWeather is open: chime and blink the LED when lightning is near, rain starts, or the AQI turns unhealthy. Silent in quiet hours and during a BUSY session.",
+      "default": false
+    },
+    "alert_lightning_distance": {
+      "type": "integer",
+      "label": "Lightning alert within",
+      "description": "Miles, or km with metric units. 0 turns the lightning alert off.",
+      "default": 10,
+      "min": 0,
+      "max": 25,
+      "step": 1
+    },
+    "alert_rain": {
+      "type": "boolean",
+      "label": "Rain alert",
+      "description": "When rain starts after at least 30 dry minutes.",
+      "default": true
+    },
+    "alert_aqi": {
+      "type": "boolean",
+      "label": "AQI alert",
+      "description": "When the AQI rises into Unhealthy for Sensitive Groups (over 100) or worse.",
+      "default": true
+    },
+    "quiet_start": {
+      "type": "time",
+      "label": "Quiet hours start",
+      "description": "No alert sounds from here until the end time. Same start and end means no quiet hours.",
+      "default": "22:00"
+    },
+    "quiet_end": {
+      "type": "time",
+      "label": "Quiet hours end",
+      "default": "07:00"
+    },
     "wf_base_url": {
       "type": "string",
       "label": "WeatherFlow API base",

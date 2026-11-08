@@ -150,6 +150,18 @@ The app reads the two sources directly, no Home Assistant in the path.
 
 Pages: the glance page is always on, with a day, night or rain glyph and the temperature in a cold-to-hot colour on the left and the AQI number on the right in its EPA category colour ("--" until the sensor answers). The wind page (compass direction, speed, gust) and the details page (feels-like, humidity, rain today, UV) are toggles in settings, both off by default except wind. A lightning page appears on its own when the station reports strikes in the last three hours.
 
+Launching: the app keeps the last readings on the bar (in `localStorage`, rewritten only when the glance page would change, or every ten minutes otherwise) and paints them the moment it starts. Readings younger than the refresh interval are used as they are; older ones are refreshed in the background, with weather and AQI fetched in parallel. Readings over an hour old are not shown at launch; on the very first launch dim `--` placeholders hold the glance layout until the sources answer. If a refresh fails, the last reading stays and dims once it is more than ten minutes old (or two refresh intervals, if longer), and it is dropped after an hour without an answer.
+
+Alerts: with **Alert sounds** on, the app chimes and blinks the status LED when lightning strikes within **Lightning alert within** (miles, or km with metric units; 0 turns it off), when rain starts after at least 30 dry minutes, or when the AQI rises into Unhealthy for Sensitive Groups (over 100) or worse. Lightning has its own falling three-note sound and jumps to the lightning page; rain and AQI share a rising two-note chime and show the glance page. The rules that keep it quiet:
+
+- It only runs while HoffWeather is the open app; the bar runs one app at a time.
+- The first reading after launch only sets a baseline, so opening the app never chimes for conditions that were already there.
+- One sound per minute at most; one lightning alert per 15 minutes in a storm; an AQI category is not announced again within an hour (no flapping at 100/101).
+- Silent during **Quiet hours** (22:00 to 07:00 by default; equal start and end turns them off) and while a BUSY work session is running.
+- Volume is the bar's own volume setting.
+
+The sounds are original bell tones synthesized by `tools/gensounds.py` into `src/sounds/*.snd` (headerless signed 16-bit mono PCM at 44.1 kHz, the BUSY Bar `.snd` format). Run `python3 tools/gensounds.py --wav <dir>` to regenerate them and write `.wav` copies for listening.
+
 Controls: turn the wheel to change pages, press it to hold a page, Start to refresh now, Back to quit.
 
 ## Network note
